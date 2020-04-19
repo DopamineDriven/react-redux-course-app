@@ -315,3 +315,154 @@
 
 ------------------------------------------------------------------------------------------
 
+## Actions, Stores, and Reducers
+
+### (1) Action Creators
+- Plain objects containing description of event
+    - Must have a type property
+        - Pass any value that is serializable to JSON
+    - Actions created by action creators
+- Considered convenience functions 
+    - rateCourse(rating) { return { type: RATE_COURSE, rating: rating } }
+- dispatching actions affects data in store
+
+### (2) Creating Redux Store
+- let store = createStore(reducer)
+- Create Store in apps entry point
+- Honors single responsibility principle
+    - Simply stores data
+    - Easier to manage and understand
+- Store can
+    - dispatch an action
+    - subscribe to a listener
+    - return its current state
+    - replace a reducer
+        - useful to support hot-reloading (replaceReducer)
+- Store is immutable
+
+#### Immutability
+- What JS types are already immutable?
+    - Number, string, boolean, undefined, null
+        - Each time value changed a new copy is created
+- What JS types are mutable?
+    - Objects, arrays, functions
+- Redux depends on immutable state to enhance performance
+    - Returns not object -> not mutating state 
+
+##### Copy via Object.assign
+- Signature
+    - Object.assign(target, ...sources)
+- Example
+    - Object.assign({}, state, { role: 'admin' })
+- Specifies existing object as a template
+    - Each new param declared on right overrides param on left
+    - Easy to forget first param needs to be empty object
+        - If no empty object
+            - State mutated; new object created
+- only creates shallow copies
+    - nested objects must be cloned too
+
+##### Copy via Spread operator
+- const newState = { ...state, role: 'admin' }
+    - creates new object that is copy of state but with role prop of admin
+- const newUsers = [ ...state.users ]
+    - creates copy of an array
+- only creates shallow copies
+    - nested objects must be cloned too
+        - consider the following
+            - const user = { name: 'Cory', address: { state: 'CA' } }
+        - The only way to clone the nested address object as well is as follows
+            - const userCopy = { ...user, address: { ...user.address } }
+        - Only clone nested object if object val needs to be modified however
+
+##### Only clone what changes
+- Deep merging tools such as clone-deep or lodash.merge
+    - Avoid blindly deep cloning
+    - Why?
+        - Deep cloning is expensive, wasteful, and causes unnecessary renders
+- Instead, clone only the objects and sub-objects and sub-sub-objects that have changed
+
+##### Immer
+- write mutative code and immer will handle change in an immutable manner
+- https://www.npmjs.com/package/immer
+- Additional libraries to handle state changes immutably
+    - seamless-immutable
+    - react-addons-update
+    - immutable.js
+
+##### Array Methods
+- Avoid
+    - Push, pop, reverse
+        - These require cloning the array first
+        - This avoids mutating the original array
+- Prefer
+    - Map, filter, reduce, find, concat, spread
+        - Immutable friendly
+        - return new array (don't mutate existing array)
+
+#### Why is state immutable in Redux? Three core benefits
+- Clarity
+    - When state updated, where and how it happened is straightforward
+        - It occurred in Reducer
+- Performance
+    - Checking every property is not necessary if state is immutable 
+    - Redux can do a reference comparison
+        - if old state isn't referencing same object in memory, then state changed
+            - if (prevStoreState !== storeState) ...
+        - won't rerender component if !change
+        - performance optimization
+- Enhanced Debugging
+    - Time-travel debugging
+        - can go back through history and see each specific state change
+        - can undo individual state changes to see how it impacts final state
+    - Turn off individual actions that occurred to see what state would look like if it had never happend (rewrite state history!)
+    - Undo/Redo
+    - Play interactions back with click of a button
+        - Can toggle the speed at which it plays back 
+
+#### Enforcing Immutability
+- If state mutated in redux, will introduce a bug 
+- Solution
+    - Trust the team if small
+    - Install redux-immutable-state-invariant library 
+        - https://www.npmjs.com/package/redux-immutable-state-invariant
+        - Warns if state is accidentally mutated
+        - Only run in dev -> does a lot of obj copying which can degrade performance
+    - Programatically enforce immutability
+        - use Immer, Immutable.js, seamless-immutable, etc
+            - Immer freezes objects disallowing mutations
+            - Immutable.js creates immutable JS data structures
+
+### (3) Reducers
+- Takes state in an action and returns new state
+    - function myReducer (state, action) {...}
+- Think of reducer like a meat grinder
+    - ingredients go in, results come out
+- Determines action passed on switch and updates state accordingly
+- Must be pure functions
+    - know it's pure if calling with same arg(s) always returns same val(s)
+- Instead of mutating state, return a copy of what was passed in 
+    - Redux uses that to update store state
+- All reducers called on each dispatch
+    - Switch statement in reducer determines whether reducer has anthing to do with new state
+
+#### Forbidden in Reducers
+- Mutate arguments
+- Perform side effects
+- Call non-pure functions 
+    - date.now() or math.random() -> non-pure
+
+#### Reducer handles its "Slice" of state
+- only passed its slice of state
+    - can only access portion of state it directly manages
+    - handle changes to different pieces of store in isolation
+
+#### Reducer Composition
+- Each action can be handled by multiple reducers
+- Each reducer can handle multiple actions
+    - "Write independent small reducer functions that are each responsible for updates to a specific slice of state. We call this pattern "reducer composition". A given action could be handled by all, some, or none of them." - Redux FAQ
+------------------------------------------------------------------------------------------
+
+##  
+
+------------------------------------------------------------------------------------------
