@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -44,6 +44,7 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 // "babel-loader" -> run babel on all JS/JSX -> webpack bundles
+                // rules processed from bottom up; eslint first then babel 
                 use: ["babel-loader", "eslint-loader"]
             },
             {   

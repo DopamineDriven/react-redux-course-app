@@ -84,3 +84,14 @@
         - Object spread, class props, dynamic imports, etc 
         - Same babel preset used by create react app
 
+## eslint config in package.json
+- "extends" enables recommended rules
+- "parser" ensures eslint understands code
+- "parserOptions" specifies ECMA version used
+- "env" specifies environments; tells eslint to expect certain globals
+- "rules"
+    - override debugger and console
+- "settings"
+    - indicates react version used (avoids not specified error)
+- "root"
+    - avoids conflicting linting rules
