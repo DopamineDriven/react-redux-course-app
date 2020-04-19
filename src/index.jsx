@@ -1,12 +1,13 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import App from "./components/App.jsx";
+import './index.css';
 
-const Index = () => {
-    return (
-        <div>
-            Hola
-        </div>
-    )
-}
-
-render(<Index/>, document.getElementById("app"))
+render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("app")
+);
