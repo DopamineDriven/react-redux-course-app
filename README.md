@@ -549,7 +549,24 @@
 - Enhance performance for free
     - Avoids unncessary rerenders
 
+------------------------------------------------------------------------------------------
 
+
+## Initial Redux Setup - 8 steps
+- (1) Create Action
+- (2) Create Reducer
+- (3) Create Root Reducer
+- (4) Configure Store
+- (5) Instantiate Store
+- (6) Connect Component
+- (7) Pass Props via Connect
+- (8) Dispatch Action
+
+### Add Feature - 4 steps
+- (1) Create Action
+- (2) Enhance Reducer
+- (3) Connect Component
+- (4) Dispatch Action
 
 
 ------------------------------------------------------------------------------------------
