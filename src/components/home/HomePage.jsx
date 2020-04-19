@@ -5,7 +5,7 @@ const HomePage = () => {
     return (
         <div className="jumbotron">
             <h1>React Redux</h1>
-            <p>React, Redux and React Router for ultra-responsive web apps.</p>
+            <p>React, Redux, & React Router for ultra-responsive web apps.</p>
             <Link to="about" className="btn btn-primary btn-lg">
                 Learn more
             </Link>

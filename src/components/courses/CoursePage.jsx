@@ -2,9 +2,7 @@ import React from 'react'
 
 const CoursePage = () => {
     return (
-        <div>
-            
-        </div>
+        <h2>Courses</h2>
     )
 }
 

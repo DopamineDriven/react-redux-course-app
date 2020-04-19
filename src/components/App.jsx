@@ -15,9 +15,9 @@ import Navbar from './navbar/Navbar.jsx';
 const App = () => {
     return (
     <div>
-        <Navbar fluid />
+        <Navbar />
         <Wrapper>
-            <Container fluid>
+            <Container>
                 {/* <Header /> */}
                 <Switch>
                     <Route exact path="/" component={HomePage} />
