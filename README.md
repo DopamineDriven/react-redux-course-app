@@ -95,3 +95,71 @@
     - indicates react version used (avoids not specified error)
 - "root"
     - avoids conflicting linting rules
+
+-------------------------------------------------------------------------------------------
+
+## Four common ways to declare react components
+- (1) createClass
+- (2) ES class
+- (3) Function
+- (4) Arrow function
+
+### createClass Component
+- OG method
+    - React.createClass
+    - not required in modern JS
+
+### JS (ES) class
+- uses extend to extend react component
+
+### Function
+- assumes return statement is render function
+- only argument is props passed in
+
+### Arrow
+- concise arrow syntax 
+    - can omit return statement if arrow is single expression
+    - if multiple JSX lines, can wrap in parentheses to make single expression
+
+### Function component benefits
+- easier to understand
+- avoid 'this' keyword and its annoying quirks
+    - eliminates need for binding
+- less transpile code -> better performance
+- high signal-to-noise ratio
+    - use destructuring on props
+    - omit return statement if single line (or wrapped) statement
+- enhanced code completion/intellisense
+    - destructured props -> all data used specified as simple function argument
+- Easy to test
+- Improved performance
+- Classes may be removed altogether in future (HOOKS)
+
+### When to use class vs function component?
+- if using react version lower than 16.8, function components lack key features
+- however, from react 16.8 on, hooks make using function components for almost everything
+    - useEffect -> lifecycle events, for example
+- When to use Class
+    - componentDidError
+    - getSnapshotBeforeUpdate
+    - ...that's it
+
+### Container vs Presentation Components
+
+#### Container 
+- Concerned with behavior, marshalling data and actions
+- little or no markup
+    - think of as backend for frontend
+- passing data and actions to child (presentation) components
+- Typically stateful
+    - In redux-> use redux's connect function at bottom of file 
+
+#### Presentational (most components)
+- Nearly all markup
+- Receive function, data, and actions via props
+- Know nothing about redux
+- Rely on props to display UI
+    - no dependency on rest of app such as redux stores
+- Often stateless
+- most in redux app are presentation components
+
