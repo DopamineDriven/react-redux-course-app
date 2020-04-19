@@ -5,7 +5,7 @@ import HomePage from './home/HomePage.jsx';
 import AboutPage from "./about/AboutPage.jsx";
 // import Header from "./common/Header.jsx";
 import PageNotFound from "./PageNotFound.jsx";
-import CoursePage from "./courses/CoursePage.jsx";
+import CoursesPage from "./courses/CoursesPage.jsx";
 import Container from './container/Container.jsx'
 import Wrapper from './wrapper/Wrapper.jsx';
 import Footer from './footer/Footer.jsx';
@@ -22,7 +22,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <Route path="/about" component={AboutPage} />
-                    <Route path="/courses" component={CoursePage} />
+                    <Route path="/courses" component={CoursesPage} />
                     <Route component={PageNotFound} />
                 </Switch>
             </Container>
