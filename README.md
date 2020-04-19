@@ -74,3 +74,13 @@
 | webpack-bundle-analyzer         | Generate report of what's in the app's production bundle         |
 | webpack-cli                     | Run Webpack via the command line                                 |
 | webpack-dev-server              | Serve app via Webpack                                            |
+
+
+---------------------------------------------------------------------------------------
+
+## configuring babel in package.json
+- presets
+    - transpiles JSX and modern JS features
+        - Object spread, class props, dynamic imports, etc 
+        - Same babel preset used by create react app
+
