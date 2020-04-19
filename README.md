@@ -153,6 +153,7 @@
 - passing data and actions to child (presentation) components
 - Typically stateful
     - In redux-> use redux's connect function at bottom of file 
+- Connect to redux store and pass down to child components (presentational)
 
 #### Presentational (most components)
 - Nearly all markup
