@@ -568,5 +568,7 @@
 - (3) Connect Component
 - (4) Dispatch Action
 
+#### Miscellaneous notes
+- By attaching an onSubmit Handler to form, both the submit button and the enter key function to submit the form
 
 ------------------------------------------------------------------------------------------
