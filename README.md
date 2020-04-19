@@ -17,7 +17,7 @@
         - Instant changes in browser w/o losing CS state
         - Time-travel debugging (replay interactions)
         - Small API
--------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 ## Environment
 - Custom dev environment
     - Compiles JSX, transpile JS, linting, generate index.html, reload on save
@@ -76,7 +76,7 @@
 | webpack-dev-server              | Serve app via Webpack                                            |
 
 
----------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 
 ## configuring babel in package.json
 - presets
@@ -96,7 +96,7 @@
 - "root"
     - avoids conflicting linting rules
 
--------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 
 ## Four common ways to declare react components
 - (1) createClass
@@ -163,4 +163,155 @@
     - no dependency on rest of app such as redux stores
 - Often stateless
 - most in redux app are presentation components
+
+------------------------------------------------------------------------------------------
+## Redux
+
+### Redux vs Context vs Lift State
+
+#### Lift State to common parent (App.jsx)
+- Lift state, user data lifted to common ancestor and passed to children
+    - "prop drilling"
+    - good first step for small apps
+    - becomes tedious
+        - leads to components with many props that exist merely to pass data down
+
+#### Context
+- Expose global data and functions from given react component...but not truly global data
+    - UserContext.Provider 
+        - holds user data and functions, often in App.jsx (common ancestor)
+    - UserContext.Consumer
+        - Import UserContext and access data via UserContext.Consumer
+
+#### Redux
+- Centralized Store
+    - Conceptualize store as local CS database where App's global data stored
+    - Any component can connect to Redux store
+        - Store cannot be changed directly
+        - Instead, any component can dispatch an Action (such as Create User)
+        - When action dispatched, store updated to reflect new data 
+            - Any connected components receive data from store and re-render
+
+### When is Redux helpful?
+- Complex data flows
+- Intercomponent communication
+- Non-hierarchical data
+- Many actions
+    - Structure and scalability becomes increasingly helpful
+- Same data used in many places
+
+### Thought process when determining if Redux is helpful
+- (1) begin with state in a single component
+- (2) Lift state as needed
+- (3) Try Context or Redux when lifting state gets tedious and isn't scaling well
+
+## 3 Core Principles of Redux
+
+### (1) One Immutable Store
+- State cannot be changed directly 
+    - One immutable store aids debugging, supports server rendering, etc
+
+### (2) Actions trigger changes
+- Only way to change state -> emit an action
+- Describe a users intent
+- Example action:
+    - type: SUBMIT_CONTACT_FORM
+    - triggers: submit contact form action
+
+### (3) Reducers Update State (Pure Functions)
+- State changes handled by pure functions
+    - Reducers
+        - Function that accepts current state in an action and returns a new state
+
+## Flux vs Redux
+
+### Similarities
+- Data Down, Actions Up 
+- Unidirectional Data Flow Philosophy Enforced
+- Actions
+    - Define a finite set of actions specifying how state can be changed
+        - Action creators to generate actions
+        - Action type consts in both as well
+- Store
+    - Both have conept of store that holds state
+    - Redux
+        - Typically a single store
+    - Flux
+        - Typically has multiple stores
+
+### Differences
+
+#### Redux
+- Reducers
+    - Pure functions that take current state in an action and return a new state
+- Containers
+    - React components with a specific use
+    - Contain necessary logic for marshalling data and actions
+        - Pass down to dumb child components via props 
+    - Easy to test, simple to reuse
+- Immutability
+    - Redux store immutable
+
+
+#### Flux has three core concepts
+- Actions
+- Dispatchers
+- Stores
+    - When actions are triggered, stores are notified via dispatcher 
+    - Uses singleton dispatcher to connect actions to stores 
+    - Stores use event emitter to connect to dispatcher 
+    - each store needs to connect to dispatcher via eventEmitter
+
+#### Redux
+- No dispatcher
+    - Relies on pure functions (reducers) instead
+    - each action handled by one or more reducers which update the single store 
+- State is immutable
+    - Reducer returns a new, updated copy of state which updates store
+
+#### Flux vs Redux cont
+- Flux
+    - Stores contain state and change logic
+    - Supports having multiple stores (user store and product store for example)
+    - Flat and disconnected stores
+        - does provide a way for stores to interact in order however
+            - waitFor function
+    - Singleton Dispatcher
+        - Sits at center of App
+        - Connects actions to stores
+    - React components subscribe to stores via onChange handlers and eventEmitters
+    - Manipulate state directly
+        - State is mutated because it is mutable 
+- Redux
+    - Honors single responsibility principle by separating logic for handling state
+        - Store and changes in logic are separate
+        - all state-changing logic handled via reducers
+            - reducer accepts current state in an action and returns an action 
+    - Only one store
+        - Avoids storing of data in multiple places 
+        - Eliminates complexity of handling interactions between stores
+        - Conceptually simpler model
+        - Can utilize multiple stores--even nest them via functional composition 
+    - No dispatcher
+        - Single store passes actions down to defined reducers 
+        - Does so via calling root reducer
+        - Pure functions (reducers); no need for eventEmitter pattern
+    - Container components utilize connect 
+        - React-Redux companion library that connects components to Redux store
+    - State is immutable 
+        - Return an updated copy of state rather than manipulating it directly 
+
+### Redux Flow
+- Unidrectional data flows
+- Action describes users intent
+    - Action must have a type property 
+        - { type: RATE_COURSE, rating: 5 }
+- Action ultimately handled by a Reducer 
+    - Returns new state based on action passed
+    - typically contain a switch statement that determines type of action passed 
+- Store is updated once new state returned form Reducer
+    - Rerenders any components utilizing data
+    - Components connected via React-Redux
+
+------------------------------------------------------------------------------------------
 
