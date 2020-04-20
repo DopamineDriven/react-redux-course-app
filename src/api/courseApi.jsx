@@ -1,3 +1,4 @@
+// contains CRUD functions
 import { handleResponse, handleError } from "./apiUtils.jsx";
 const baseUrl = process.env.API_URL + "/courses/";
 
