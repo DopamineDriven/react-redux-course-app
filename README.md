@@ -594,3 +594,75 @@
         - can write tests that utilize data
 - Can point to real API eventually by changing import later
 - JSON server a popular choice for mock RESTful API calls
+
+## Redux Middleware
+- runs between dispatching an action and the moment that it reaches the reducer
+- Action -> Middleware -> Reducer
+- Can handle 
+    - Async API calls
+    - Logging
+    - Crash Reporting
+    - Routing
+
+## Async in Redux
+- Actions are synchronos and must return an object in Redux
+- So, how are Async calls handled?
+    - Libraries
+        - redux-thunk https://www.npmjs.com/package/redux-thunk
+            - returns functions from action creators instead of objects
+        - redux-promise https://www.npmjs.com/package/redux-promise
+            - use promises for async
+        - redux-observable https://www.npmjs.com/package/redux-observable
+            - use RxJS observables
+        - redux-saga https://www.npmjs.com/package/redux-saga
+            - uses ES6 generators and offers power with rich domain specific language
+    - Note
+        - Middleware to handle asyncs isn't required but is highly desirable
+
+### Redux-Thunk vs Redux-Saga
+- Thunks
+    - Actions return functions instead of objects
+        - wraps async operation in a function
+    - Clunky to test
+        - must mock api calls
+        - no easy hooks for observing individual steps in async flow
+    - Conceptually simple
+        - like redux, the api surface area is very small 
+- Sagas
+    - handle actions via ES6 generators
+        - generator functions can be paused and resumed later 
+        - can contain multiple yield statements
+        - at each yield generator will pause 
+    - Easy to test
+        - can assert on effects which return data
+        - don't have to mock anything 
+    - Hard to learn
+        - understand generators and a large API 
+        - many ways to introduce subtle bugs into code if implications/interactions of effects being composed not fully understood
+
+### Thunks
+- Thunk is a function that returns a function
+- Computer Science term
+    - A function that wraps an expression to delay its evaluation
+- Prevent directly causing side effects in actions, action creators, or components
+    - Anything impure is wrapped in a thunk
+    - Later, the thunk is invoked by middleware to cause the effect 
+- Transferring side effects to run at single point in Redux loop (middleware) leaves rest of app relatively pure 
+- Redux-Thunk has access to the store
+    - Can pass in the store's dispatch and get state when invoking the thunk 
+    - Middleware itself responsible for injecting dependencies into the thunk 
+- Thunks are automatically passed dispatch as an argument
+    - Also receive getState as a second argument
+        - useful for checking cached data before making a request
+        - useful for checking whether you're authenticated (conditional dispatching)
+    - Can optionally inject a third argument manually
+        - common to use Axios for making API calls, for example 
+
+### Bottom Line with Redux-Thunk Middleware
+- Major benefit is that components can call sync and async actions the same way
+- Keep app code simple and consistent
+
+### Why use Async Middleware?
+- Consistency
+- Purity
+- Easier testing 
