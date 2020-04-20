@@ -185,7 +185,7 @@
 
 #### Redux
 - Centralized Store
-    - Conceptualize store as local CS database where App's global data stored
+    - Conceptualize store as local CS database where App's global data stored (index.jsx)
     - Any component can connect to Redux store
         - Store cannot be changed directly
         - Instead, any component can dispatch an Action (such as Create User)
@@ -492,7 +492,9 @@
 #### React-Redux Provider
 - utilized at apps root
 - attaches app to redux store
-- only need to use once in root 
+- only need to use once in root
+- Wrap App component in ReduxProvider passing configureStore() = store as props
+    - Router is also wrapped, which gives app global access to store 
 
 #### React-Redux Connect
 - Creates (smart) container components
@@ -570,5 +572,8 @@
 
 #### Miscellaneous notes
 - By attaching an onSubmit Handler to form, both the submit button and the enter key function to submit the form
+
+- Remember
+    - arrow functions inherit binding context of their enclosing scope
 
 ------------------------------------------------------------------------------------------
