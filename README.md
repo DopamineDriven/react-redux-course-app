@@ -582,3 +582,15 @@
     - useful for performance reasons
     - usually wrapped in a div/a/p anchor
 ------------------------------------------------------------------------------------------
+
+## Mock APIs
+- Start before API exists to begin dev immediately
+- provides backup plan
+- independence from other dev teams (don't have to wait for others to code it out)
+- ultra-fast (instantaneous responses)
+    - can control speed of responses (can use tools like setTimeout)
+    - Aids testing
+    - Data is deterministic 
+        - can write tests that utilize data
+- Can point to real API eventually by changing import later
+- JSON server a popular choice for mock RESTful API calls
