@@ -4,10 +4,12 @@ import * as types from '../actions/actionTypes.jsx';
 export default function courseReducer(state = [], action) {
     switch(action.type) {
         case types.CREATE_COURSE:
-            // create new array containing all existing courses plus one additional course passed in
-            return [...state, { ...action.course }]
-        // always declare reducer default so if !change in state it is untouched
+            return [...state, { ...action.course }];
+        case types.LOAD_COURSES_SUCCESS:
+            return action.courses;
         default: 
             return state
     }
 }
+
+// always declare reducer default so if !change in state it is untouched

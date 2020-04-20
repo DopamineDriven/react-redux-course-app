@@ -1,13 +1,14 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers/index.jsx';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import thunk from 'redux-thunk';
 
 export default function configureStore(initialState) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 
     return createStore(
         rootReducer, 
         initialState, 
-        composeEnhancers(applyMiddleware(reduxImmutableStateInvariant()))
+        composeEnhancers(applyMiddleware(thunk, reduxImmutableStateInvariant()))
     )
 }
 
@@ -18,5 +19,5 @@ export default function configureStore(initialState) {
     // adds support for redux dev tools
     // oddly formatted global chosen to avoid name collisions
     // composeEnhancers calls applyMiddleware
-    // applyMiddleware calls reduxImmutableStateInvariant()
+    // applyMiddleware calls thunk and reduxImmutableStateInvariant()
     // L A Y E R S
