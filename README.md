@@ -576,4 +576,9 @@
 - Remember
     - arrow functions inherit binding context of their enclosing scope
 
+- mapping in render
+    - keys help react keep track of each element in an array
+    - key should be unique and ideally set to an id
+    - useful for performance reasons
+    - usually wrapped in a div/a/p anchor
 ------------------------------------------------------------------------------------------
