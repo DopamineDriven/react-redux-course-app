@@ -31,7 +31,6 @@ class CoursesPage extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        debugger;
         this.props.actions.createCourse(this.state.course)
     };
 
@@ -64,7 +63,6 @@ CoursesPage.propTypes = {
 
 // (c)
 function mapStateToProps(state) {
-    debugger;
     return {
         courses: state.courses
     }
@@ -74,6 +72,7 @@ function mapStateToProps(state) {
 // (d)
 function mapDispatchToProps(dispatch) {
     return {
+        // (e)
         actions: bindActionCreators(courseActions, dispatch)
     }
 }
@@ -124,4 +123,14 @@ mapDispatchToProps
 decalres what actions to pass to component on props 
     optional parameter 
     when omitted, component gets a dispatch prop injected by default 
+*/
+
+
+/*
+(e)
+bindActionCreators comes with Redux
+    renders manually wrapping actionCreators in a dispatch call unnecessary
+    used in the mapDispatchToProps function
+    will accept a function or an object (can pass all actions, one option, etc)
+    returns object mimicking the original object but with each function wrapped in a call to dispatch
 */
