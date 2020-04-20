@@ -17,5 +17,6 @@ export default function configureStore(initialState) {
 // composeEnhancers
     // adds support for redux dev tools
     // oddly formatted global chosen to avoid name collisions
-    // hence, why it calls the apply middleware -> reduxImmutableStateInvariant
+    // composeEnhancers calls applyMiddleware
+    // applyMiddleware calls reduxImmutableStateInvariant()
     // L A Y E R S
