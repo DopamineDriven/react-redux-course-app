@@ -1,8 +1,12 @@
+// presentation component
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+// destructuring props via ({ courses }) instead of destructuring on return 
+// -> const { courses } = props;
 const CourseList = ({ courses }) => {
+    return (
   <table className="table">
     <thead>
       <tr>
@@ -13,7 +17,7 @@ const CourseList = ({ courses }) => {
       </tr>
     </thead>
     <tbody>
-      {courses.map((course) => {
+      {courses.map(course => {
         return (
           <tr key={course.id}>
             <td>
@@ -33,7 +37,8 @@ const CourseList = ({ courses }) => {
         );
       })}
     </tbody>
-  </table>;
+  </table>
+    )
 };
 
 CourseList.propTypes = {
