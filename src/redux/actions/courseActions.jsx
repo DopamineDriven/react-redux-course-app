@@ -5,6 +5,14 @@ export function createCourse(course) {
     return { type: types.CREATE_COURSE, course }
 }
 
+export function createCourseSuccess(course) {
+    return { type: types.CREATE_COURSE_SUCCESS, course }
+}
+
+export function updateCourseSuccess(course) {
+    return { type: types.UPDATE_COURSE_SUCCESS, course }
+}
+
 // (a)
 export function loadCourseSuccess(courses) {
     return { type: types.LOAD_COURSES_SUCCESS, courses }
@@ -22,6 +30,18 @@ export function loadCourses() {
             .catch(error => {
                 throw error
             })
+    }
+}
+// (c)
+export function saveCourse(course) {
+    return function(dispatch, getState) {
+        return courseApi
+        .saveCourse(course)
+        .then(savedCourse => {
+            course.id 
+                ? dispatch(updateCourseSuccess(savedCourse))
+                : dispatch(createCourseSuccess(savedCourse))
+        })
     }
 }
 
@@ -49,4 +69,20 @@ export function loadCourses() {
     pass loadCourseSuccess courses received
     note how courseApi is called from api folder
         this keeps thunks simple and api centralized 
+*/
+
+/*
+(c)
+    new thunk -> saveCourse
+    dispatch different actions depending on whether
+        creating a new course
+        updating an existing course
+            this is executed via a ternary
+            depends on whether a course id exists or not
+    note: 
+        may choose to access stores state in thunk without passing course data into thunk
+            getState is an optional parameter
+            if a breakpoint is set and parameter watched would see that
+                getState has all of Redux store's state inside
+                not necessary here, but this can be exceedingly useful
 */
