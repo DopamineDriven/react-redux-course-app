@@ -29,7 +29,15 @@ function ManageCoursePage ({
                 alert(`loading authors failed ${error}`)
             })
         }
-    }, [])
+    }, []);
+    // (c)
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setCourse(prevCourse => ({
+            ...prevCourse,
+            [name]: name === "authorId" ? parseInt(value, 10) : value
+        }))
+    }
 
 
     return (
@@ -37,6 +45,7 @@ function ManageCoursePage ({
             course={course}
             errors={errors}
             authors={authors}
+            onChange={handleChange}
         />
     )
 }
@@ -59,7 +68,7 @@ function mapStateToProps(state) {
 }
 
 
-// (c)
+// (d)
 const mapDispatchToProps = {
     loadCourses,
     loadAuthors
@@ -89,23 +98,33 @@ useState accepts a default arg
     to a copy of the course passed in on props 
 */
 
+/*
+(c)
+Reference TextInput in CourseForm.jsx
+    Each input has a name that corresponds to property it displays
+    name="category"
+    value=course.category
+    errors=errors.category
+        Allows corresponding property in state to be updated with a single handler
+Destructure event at top of handleChange function
+JavaScript's computed property syntax allows the referencing of a property via a variable 
+    [name]: -> if input that changed was the title field, [name] is equivalent to writing course.title
+Need to handle the authorId differently than any other value, hence the ternary conditional
+    Since authorId is a number, use parseInt(value, 10)
+    Events returns numbers as strings, so parseInt converts number back to an Int
+Destructuring at the top -> can access event inside of the setState function and less code
+    Without the destructuring, an error that this synthetic event is reused for performance reasons
+    Why? because the synthetic event is no longer defined within the async function 
+    Destructuring on the first line circumvents that error because it provides
+    a way in which to retain a local reference to the event 
+*/
+
 
 
 /*
-(c)
+(d)
 declare mapDispatchToProps as an object instead of a function
 call loadCourses and loadAuthors as named import
     The bound action passed on props takes precedence over the module scope
     that is the function scope takes precedence over the module scope 
-*/
-
-/*
-  const newCourse = {
-    id: null,
-    title: "",
-    authorId: null,
-    category: ""
-  };
-
-  newCourse from tools/mockData.js
 */
