@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadCourses } from '../../redux/actions/courseActions.jsx';
+import { loadCourses, saveCourse } from '../../redux/actions/courseActions.jsx';
 import { loadAuthors } from '../../redux/actions/authorActions.jsx';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm.jsx';
@@ -11,12 +11,14 @@ function ManageCoursePage ({
     courses, 
     authors, 
     loadAuthors, 
-    loadCourses, 
+    loadCourses,
+    saveCourse,
+    history, 
     ...props 
 }) {
     // (b)
     const [course, setCourse] = useState({ ...props.course });
-    const [errors, setErrors] = useState({});
+    const [errors] = useState({});
 
     useEffect(() => {
         if (courses.length === 0) {
@@ -38,6 +40,13 @@ function ManageCoursePage ({
             [name]: name === "authorId" ? parseInt(value, 10) : value
         }))
     }
+    // (d)
+    function handleSave(event) {
+        event.preventDefault();
+        saveCourse(course).then(() => {
+            history.push('/courses')
+        })
+    }
 
 
     return (
@@ -46,6 +55,7 @@ function ManageCoursePage ({
             errors={errors}
             authors={authors}
             onChange={handleChange}
+            onSave={handleSave}
         />
     )
 }
@@ -55,7 +65,9 @@ ManageCoursePage.propTypes = {
     authors: PropTypes.array.isRequired,
     courses: PropTypes.array.isRequired,
     loadCourses: PropTypes.func.isRequired,
-    loadAuthors: PropTypes.func.isRequired
+    loadAuthors: PropTypes.func.isRequired,
+    saveCourse: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
 
 
@@ -68,10 +80,12 @@ function mapStateToProps(state) {
 }
 
 
-// (d)
+
+// (e)
 const mapDispatchToProps = {
     loadCourses,
-    loadAuthors
+    loadAuthors,
+    saveCourse
 }
 
 const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps)
@@ -120,9 +134,21 @@ Destructuring at the top -> can access event inside of the setState function and
 */
 
 
-
 /*
 (d)
+handleSave accepts an event
+    preventDefault called to keep page from refreshing
+    then call saveCourse and pass it course available in state
+saveCourse is getting passed in on props
+    it is being bound to dispatch via mapDispatchToProps declaration
+    it is also imported by the same name at the top of file from actions
+    however, inside this function, the locally scoped bound var
+        passed in on props takes precedence
+*/
+
+
+/*
+(e)
 declare mapDispatchToProps as an object instead of a function
 call loadCourses and loadAuthors as named import
     The bound action passed on props takes precedence over the module scope
