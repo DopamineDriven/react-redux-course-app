@@ -683,3 +683,8 @@
 - Ask yourself, "Who cares about this data?"
     - If only a few closely related components use the data, use React state
     - If data is more globally utilized, use Redux state 
+
+### Immutable operators
+- With Redux, it is common to use the following operators
+    - spread, map, filter, and reduce
+    - enable one to accomplish powerful tasks without mutating state

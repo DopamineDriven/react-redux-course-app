@@ -1,10 +1,6 @@
 import * as types from './actionTypes.jsx';
 import * as courseApi from '../../api/courseApi.jsx';
 
-export function createCourse(course) {
-    return { type: types.CREATE_COURSE, course }
-}
-
 export function createCourseSuccess(course) {
     return { type: types.CREATE_COURSE_SUCCESS, course }
 }
@@ -34,7 +30,7 @@ export function loadCourses() {
 }
 // (c)
 export function saveCourse(course) {
-    return function(dispatch, getState) {
+    return function(dispatch) {
         return courseApi
         .saveCourse(course)
         .then(savedCourse => {
@@ -81,7 +77,7 @@ export function saveCourse(course) {
             depends on whether a course id exists or not
     note: 
         may choose to access stores state in thunk without passing course data into thunk
-            getState is an optional parameter
+            getState is an optional parameter (ommitted as lint was throwing a warning)
             if a breakpoint is set and parameter watched would see that
                 getState has all of Redux store's state inside
                 not necessary here, but this can be exceedingly useful
