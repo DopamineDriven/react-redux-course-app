@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // imports createCourse function as props
 import * as courseActions from '../../redux/actions/courseActions.jsx';
+import * as authorActions from '../../redux/actions/authorActions.jsx';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import CourseList from './CourseList.jsx';
@@ -10,9 +11,17 @@ import CourseList from './CourseList.jsx';
 
 class CoursesPage extends Component {
     componentDidMount() {
-        this.props.actions.loadCourses().catch(error => {
-            alert(`loading courses failed ${error}`)
-        })
+        const { courses, authors, actions } = this.props
+        if (courses.length === 0) {
+            actions.loadCourses().catch(error => {
+                alert(`loading courses failed ${error}`)
+            })
+        }
+        if (authors.length === 0) {
+            actions.loadAuthors().catch(error => {
+                alert(`loading authors failed ${error}`)
+            })
+        }
     }
 
 
@@ -32,10 +41,19 @@ CoursesPage.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
-
+// (a)
 function mapStateToProps(state) {
     return {
-        courses: state.courses
+        courses: 
+            state.authors.length === 0 
+            ? [] 
+            : state.courses.map(course => {
+                return {
+                    ...course,
+                    authorName: state.authors.find(a => a.id === course.authorId).name
+                }
+            }),
+        authors: state.authors
     }
 }
 
@@ -43,12 +61,35 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(courseActions, dispatch)
+        actions: {
+            loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+            loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
+        }
     }
 }
 
 const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps)
 export default connectedStateAndProps(CoursesPage);
+
+/*
+(a)
+use conditional to check if state.authors.length is loaded via ternary
+if it is loaded, weave authorName into course array being mapped
+to retrieve author name, look in list of redux stores for author
+find the author by Id by looking through list of courses and returning name 
+Also return list of authors set to state.authors
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 // --------------------PRE REFACTOR----------------------------------------
 
