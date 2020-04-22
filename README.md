@@ -676,7 +676,9 @@
     - use industry convention suffix notation 
         - LOAD_COURSES_SUCCESS, LOAD_COURSES_ERROR
 
+
 -------------------------------------------------------------------------------------------
+
 
 ### Redux State
 - Avoid using Redux for all state
@@ -688,3 +690,16 @@
 - With Redux, it is common to use the following operators
     - spread, map, filter, and reduce
     - enable one to accomplish powerful tasks without mutating state
+
+
+-------------------------------------------------------------------------------------------
+
+
+## Addressing/Improving app issues by
+- Adding loading indicator (spinner)
+- Displaying feedback upon clicking save
+- Displaying API failures
+- Displaying server-side validation
+- Adding client-side validation
+- Implementing Optimistic deletes (helps mask a slow API)
+- Try Async/Await instead of products
