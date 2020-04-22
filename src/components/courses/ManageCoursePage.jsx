@@ -70,18 +70,25 @@ ManageCoursePage.propTypes = {
     history: PropTypes.object.isRequired
 };
 
+// (e)
+export function getCourseBySlug(courses, slug) {
+    return courses.find(course => course.slug === slug) || null
+}
 
-function mapStateToProps(state) {
+// (f)
+function mapStateToProps(state, ownProps) {
+    const slug = ownProps.match.params.slug;
+    const course = slug && state.courses.length > 0 
+        ? getCourseBySlug(state.courses, slug) 
+        : newCourse;    
     return {
-        course: newCourse,
+        course,
         courses: state.courses,
         authors: state.authors
     }
 }
 
-
-
-// (e)
+// (g)
 const mapDispatchToProps = {
     loadCourses,
     loadAuthors,
@@ -149,6 +156,35 @@ saveCourse is getting passed in on props
 
 /*
 (e)
+getCourseBySlug func
+    accepts list of courses and course slug being looked for 
+    utilize JS's built-in find method to get requested course
+    if it is not found, return null 
+These functions are commonly called "Selectors"
+    Why? Because it selects data from the Redux store 
+*Could also declare in course reducer for global use
+    For performance one could even memoize using a library like reselect
+        Check out selectors in redux for more info 
+        https://redux.js.org/recipes/computing-derived-data
+*/
+
+
+/*
+(f)
+ownProps parameter -> automatically passed in by Redux
+    enables access to component props
+    in this case, routing-related props
+    use this to read URL data injected on props by React Router
+to read course slug from url, a single line of code is required
+    const slug = ownProps.match.params.slug 
+        access "/course/:slug" in mapStateToProps via ownProps.params.match.slug
+            This is one of two paths for ManageCoursePage in app.jsx
+*/
+
+
+
+/*
+(g)
 declare mapDispatchToProps as an object instead of a function
 call loadCourses and loadAuthors as named import
     The bound action passed on props takes precedence over the module scope
