@@ -25,13 +25,16 @@ function ManageCoursePage ({
             loadCourses().catch(error => {
                 alert(`loading courses failed ${error}`)
             })
+        } else {
+            setCourse({ ...props.course })
         }
+
         if (authors.length === 0) {
             loadAuthors().catch(error => {
                 alert(`loading authors failed ${error}`)
             })
         }
-    }, []);
+    }, [props.course]);
     // (c)
     function handleChange(event) {
         const { name, value } = event.target;
