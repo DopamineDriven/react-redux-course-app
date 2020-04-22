@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// imports createCourse function as props
 import * as courseActions from '../../redux/actions/courseActions.jsx';
 import * as authorActions from '../../redux/actions/authorActions.jsx';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import CourseList from './CourseList.jsx';
-
 
 
 class CoursesPage extends Component {
