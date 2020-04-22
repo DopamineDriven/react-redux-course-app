@@ -678,4 +678,8 @@
 
 -------------------------------------------------------------------------------------------
 
-## Async writes in Redux
+### Redux State
+- Avoid using Redux for all state
+- Ask yourself, "Who cares about this data?"
+    - If only a few closely related components use the data, use React state
+    - If data is more globally utilized, use Redux state 
