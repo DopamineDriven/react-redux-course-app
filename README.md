@@ -667,4 +667,13 @@
 - Purity
 - Easier testing 
 
+### Wrap up
+- Configure mock api using express and json server
+- Redux middleware
+- Async libraries
+    - Thunks*, redux-promise, and sagas
+- Naming async actions 
+    - use industry convention suffix notation 
+        - LOAD_COURSES_SUCCESS, LOAD_COURSES_ERROR
+
 -------------------------------------------------------------------------------------------
