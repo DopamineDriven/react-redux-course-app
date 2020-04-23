@@ -1,106 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { loadCourses, saveCourse } from '../../redux/actions/courseActions.jsx';
-import { loadAuthors } from '../../redux/actions/authorActions.jsx';
-import PropTypes from 'prop-types';
-import CourseForm from './CourseForm.jsx';
-import { newCourse } from '../../../tools/mockData.js';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { loadCourses, saveCourse } from "../../redux/actions/courseActions.jsx";
+import { loadAuthors } from "../../redux/actions/authorActions.jsx";
+import PropTypes from "prop-types";
+import CourseForm from "./CourseForm.jsx";
+import { newCourse } from "../../../tools/mockData.js";
 
 // (a)
-function ManageCoursePage ({ 
-    courses, 
-    authors, 
-    loadAuthors, 
-    loadCourses,
-    saveCourse,
-    history, 
-    ...props 
+function ManageCoursePage({
+  courses,
+  authors,
+  loadAuthors,
+  loadCourses,
+  saveCourse,
+  history,
+  ...props
 }) {
-    // (b)
-    const [course, setCourse] = useState({ ...props.course });
-    const [errors] = useState({});
+  // (b)
+  const [course, setCourse] = useState({ ...props.course });
+  const [errors] = useState({});
 
-    useEffect(() => {
-        if (courses.length === 0) {
-            loadCourses().catch(error => {
-                alert(`loading courses failed ${error}`)
-            })
-        } else {
-            setCourse({ ...props.course })
-        }
-
-        if (authors.length === 0) {
-            loadAuthors().catch(error => {
-                alert(`loading authors failed ${error}`)
-            })
-        }
-    }, [props.course]);
-    // (c)
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setCourse(prevCourse => ({
-            ...prevCourse,
-            [name]: name === "authorId" ? parseInt(value, 10) : value
-        }))
-    }
-    // (d)
-    function handleSave(event) {
-        event.preventDefault();
-        saveCourse(course).then(() => {
-            history.push('/courses')
-        })
+  useEffect(() => {
+    if (courses.length === 0) {
+      loadCourses().catch((error) => {
+        alert(`loading courses failed ${error}`);
+      });
+    } else {
+      setCourse({ ...props.course });
     }
 
+    if (authors.length === 0) {
+      loadAuthors().catch((error) => {
+        alert(`loading authors failed ${error}`);
+      });
+    }
+  }, [props.course]);
+  // (c)
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      [name]: name === "authorId" ? parseInt(value, 10) : value,
+    }));
+  }
+  // (d)
+  function handleSave(event) {
+    event.preventDefault();
+    saveCourse(course).then(() => {
+      history.push("/courses");
+    });
+  }
 
-    return (
-        <CourseForm 
-            course={course}
-            errors={errors}
-            authors={authors}
-            onChange={handleChange}
-            onSave={handleSave}
-        />
-    )
+  return (
+    <CourseForm
+      course={course}
+      errors={errors}
+      authors={authors}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
 }
 
 ManageCoursePage.propTypes = {
-    course: PropTypes.object.isRequired,
-    authors: PropTypes.array.isRequired,
-    courses: PropTypes.array.isRequired,
-    loadCourses: PropTypes.func.isRequired,
-    loadAuthors: PropTypes.func.isRequired,
-    saveCourse: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 // (e)
 export function getCourseBySlug(courses, slug) {
-    return courses.find(course => course.slug === slug) || null
+  return courses.find((course) => course.slug === slug) || null;
 }
 
 // (f)
 function mapStateToProps(state, ownProps) {
-    const slug = ownProps.match.params.slug;
-    const course = slug && state.courses.length > 0 
-        ? getCourseBySlug(state.courses, slug) 
-        : newCourse;    
-    return {
-        course,
-        courses: state.courses,
-        authors: state.authors
-    }
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
+  return {
+    course,
+    courses: state.courses,
+    authors: state.authors,
+  };
 }
 
 // (g)
 const mapDispatchToProps = {
-    loadCourses,
-    loadAuthors,
-    saveCourse
-}
+  loadCourses,
+  loadAuthors,
+  saveCourse,
+};
 
-const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps)
+const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
 export default connectedStateAndProps(ManageCoursePage);
-
 
 /*
 (a)
@@ -112,7 +111,6 @@ another option would be to alias course as course: initailCourse
     within the destructuring statement
 */
 
-
 /*
 (b)
 useState returns a pair of values
@@ -121,7 +119,6 @@ useState accepts a default arg
     specifying that it should initialize course state var
     to a copy of the course passed in on props 
 */
-
 
 /*
 (c)
@@ -144,7 +141,6 @@ Destructuring at the top -> can access event inside of the setState function and
     a way in which to retain a local reference to the event 
 */
 
-
 /*
 (d)
 handleSave accepts an event
@@ -157,7 +153,6 @@ saveCourse is getting passed in on props
         passed in on props takes precedence
 */
 
-
 /*
 (e)
 getCourseBySlug func
@@ -168,10 +163,9 @@ These functions are commonly called "Selectors"
     Why? Because it selects data from the Redux store 
 *Could also declare in course reducer for global use
     For performance one could even memoize using a library like reselect
-        Check out selectors in redux for more info 
+        selectors in redux info below
         https://redux.js.org/recipes/computing-derived-data
 */
-
 
 /*
 (f)
@@ -184,7 +178,6 @@ to read course slug from url, a single line of code is required
         access "/course/:slug" in mapStateToProps via ownProps.params.match.slug
             This is one of two paths for ManageCoursePage in app.jsx
 */
-
 
 /*
 (g)
