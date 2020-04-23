@@ -122,6 +122,7 @@ useState accepts a default arg
     to a copy of the course passed in on props 
 */
 
+
 /*
 (c)
 Reference TextInput in CourseForm.jsx
@@ -183,7 +184,6 @@ to read course slug from url, a single line of code is required
         access "/course/:slug" in mapStateToProps via ownProps.params.match.slug
             This is one of two paths for ManageCoursePage in app.jsx
 */
-
 
 
 /*
