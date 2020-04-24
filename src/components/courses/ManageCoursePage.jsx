@@ -9,7 +9,7 @@ import Spinner from "../common/Spinner.jsx";
 import { toast } from "react-toastify";
 
 // (a)
-function ManageCoursePage({
+export function ManageCoursePage({
   courses,
   authors,
   loadAuthors,
@@ -129,6 +129,8 @@ export default connectedStateAndProps(ManageCoursePage);
 
 /*
 (a)
+UPDATE
+  exporting ManageCoursePage (unconnected component) for testing purposes
 use rest operator to assign any properties not destructured to object ...props
     rest operator uses same syntax as spread operator
     on function declaration line, rest operator stores any properties

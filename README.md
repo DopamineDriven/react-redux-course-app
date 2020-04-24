@@ -898,3 +898,10 @@
     - (2) Add named export for unconnected component
         - useful for testing rendering and local state behaviors
         - this is simpler than wrapping with provider 
+
+### Testing Thunks
+- Mock two things:
+    - (1) Redux Store
+        - redux-mock-store
+    - (2) HTTP calls and any API calls made
+        - fetch-mock

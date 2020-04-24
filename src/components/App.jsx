@@ -1,9 +1,7 @@
 import React from 'react';
-// switch -> declares only one route should match
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './home/HomePage.jsx';
 import AboutPage from "./about/AboutPage.jsx";
-// import Header from "./common/Header.jsx";
 import PageNotFound from "./PageNotFound.jsx";
 import CoursesPage from "./courses/CoursesPage.jsx";
 import Container from './container/Container.jsx'
@@ -20,7 +18,6 @@ const App = () => {
         <Navbar />
         <Wrapper>
             <Container>
-                {/* <Header /> */}
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <Route path="/about" component={AboutPage} />
@@ -39,6 +36,7 @@ const App = () => {
 
 export default App;
 
+// switch -> declares only one route should match
 // /course/:slug
     // can be thought of as a url friendly id
     // like an id, the slug is unique 
