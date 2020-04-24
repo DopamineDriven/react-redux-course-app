@@ -913,3 +913,4 @@
     - no need to mock any dependencies or simulate API calls -> Why?
         - any new incoming data comes in as an action 
 - Simply call reducer with a state and an action and assert that its output is what's expected 
+    - Given this input, Assert this output.
