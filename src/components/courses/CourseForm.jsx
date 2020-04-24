@@ -21,7 +21,7 @@ const CourseForm = ({
             )}
             <TextInput 
                 name="title"
-                label="title"
+                label="Title"
                 value={course.title}
                 onChange={onChange}
                 error={errors.title}

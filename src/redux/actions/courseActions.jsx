@@ -11,8 +11,8 @@ export function updateCourseSuccess(course) {
 }
 
 // (a)
-export function loadCourseSuccess(course) {
-    return { type: types.LOAD_COURSES_SUCCESS, course }
+export function loadCourseSuccess(courses) {
+    return { type: types.LOAD_COURSES_SUCCESS, courses }
 }
 
 export function deleteCourseOptimistic(course) {
