@@ -827,3 +827,22 @@
 ### Configuring Enzyme
 - testSetup.js
     - requires pulling in an adapter for version of React being used
+- Shallow vs mount
+    - Testing Navbar (example)
+        - Shallow 
+            - can use NavLink tags directly to test their presence
+            - scans component for number of NavLink tags in JSX
+            - assert that there are 3 total expected
+        - Mount
+            - full DOM is created in memory using JSDOM
+            - Anchor tags "a" are expected
+                - Why?
+                - JSX NavLinks ultimately transpiled into anchor tags
+            - Necessary to import MemoryRouter from react-router-dom
+                - wrap component in MemoryRouter
+                - Why?
+                - Navbar component expects to be ran as a child of react-router
+                    - expects to receive React Router's props
+
+### React Testing Library
+- 
