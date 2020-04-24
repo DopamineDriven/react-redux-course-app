@@ -913,4 +913,11 @@
     - no need to mock any dependencies or simulate API calls -> Why?
         - any new incoming data comes in as an action 
 - Simply call reducer with a state and an action and assert that its output is what's expected 
-    - Given this input, Assert this output.
+    - Given this input, Assert this output
+
+
+### Testing the Redux Store
+- Write an automated integration test 
+- Goal
+    - ensure actions, store, and reducers all working together as expected
+- tests a large surface area with a small amount of code without being brittle in the process
