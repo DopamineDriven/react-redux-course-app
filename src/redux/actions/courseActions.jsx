@@ -1,5 +1,6 @@
 import * as types from './actionTypes.jsx';
 import * as courseApi from '../../api/courseApi.jsx';
+import { beginApiCall } from './apiStatusActions.jsx';
 
 export function createCourseSuccess(course) {
     return { type: types.CREATE_COURSE_SUCCESS, course }
@@ -18,6 +19,7 @@ export function loadCourseSuccess(courses) {
 // (b)
 export function loadCourses() {
     return function(dispatch) {
+        dispatch(beginApiCall())
         return courseApi
             .getCourses()
             .then(courses => {
@@ -31,6 +33,7 @@ export function loadCourses() {
 // (c)
 export function saveCourse(course) {
     return function(dispatch) {
+        dispatch(beginApiCall())
         return courseApi
         .saveCourse(course)
         .then(savedCourse => {
@@ -89,4 +92,7 @@ export function saveCourse(course) {
             if a breakpoint is set and parameter watched would see that
                 getState has all of Redux store's state inside
                 not necessary here, but this can be exceedingly useful
+    update:
+        dispatch(beginApiCall()) before returning courseApi
+            ensure to invoke with parentheses 
 */
