@@ -868,3 +868,33 @@
 - React Testing Library has moved to @Testing-Library/React
     - use the latter library with the same exact parameters
     - former library is no longer supported
+
+
+
+-------------------------------------------------------------------------------------------
+
+
+## Testing Redux
+- Connected components
+- Redux
+    - Action creators
+    - Thunks
+    - Reducers
+    - Store
+- Goals
+    - Test markup
+        - Presentational components
+    - Test behavior 
+        - Container components 
+
+### Testing Container Components
+- Test behavior (little markup)
+- Wrapped in a call to connect
+- How to test when components are wrapped in a call to connect
+    - (1) Wrap with Provider (redux provider) in test
+        - reference the store, pass to provider
+            - can create a custom store for the test
+            - useful for testing redux related portions of component
+    - (2) Add named export for unconnected component
+        - useful for testing rendering and local state behaviors
+        - this is simpler than wrapping with provider 
