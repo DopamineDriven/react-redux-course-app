@@ -5,6 +5,7 @@ import { loadAuthors } from "../../redux/actions/authorActions.jsx";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm.jsx";
 import { newCourse } from "../../../tools/mockData.js";
+import Spinner from "../common/Spinner.jsx";
 
 // (a)
 function ManageCoursePage({
@@ -50,8 +51,10 @@ function ManageCoursePage({
       history.push("/courses");
     });
   }
-
-  return (
+  // (e)
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       errors={errors}
@@ -72,12 +75,12 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-// (e)
+// (f)
 export function getCourseBySlug(courses, slug) {
   return courses.find((course) => course.slug === slug) || null;
 }
 
-// (f)
+// (g)
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
   const course =
@@ -91,7 +94,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-// (g)
+// (h)
 const mapDispatchToProps = {
   loadCourses,
   loadAuthors,
@@ -155,6 +158,13 @@ saveCourse is getting passed in on props
 
 /*
 (e)
+Created a ternary expression
+  if authors.length = 0 and courses.length = 0 then show spinner
+  else, load the page
+*/
+
+/*
+(f)
 getCourseBySlug func
     accepts list of courses and course slug being looked for 
     utilize JS's built-in find method to get requested course
@@ -168,7 +178,7 @@ These functions are commonly called "Selectors"
 */
 
 /*
-(f)
+(g)
 ownProps parameter -> automatically passed in by Redux
     enables access to component props
     in this case, routing-related props
@@ -180,7 +190,7 @@ to read course slug from url, a single line of code is required
 */
 
 /*
-(g)
+(h)
 declare mapDispatchToProps as an object instead of a function
 call loadCourses and loadAuthors as named import
     The bound action passed on props takes precedence over the module scope
