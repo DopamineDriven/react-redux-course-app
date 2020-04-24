@@ -146,7 +146,7 @@
 
 ### Container vs Presentation Components
 
-#### Container 
+### Container 
 - Concerned with behavior, marshalling data and actions
 - little or no markup
     - think of as backend for frontend
@@ -155,7 +155,7 @@
     - In redux-> use redux's connect function at bottom of file 
 - Connect to redux store and pass down to child components (presentational)
 
-#### Presentational (most components)
+### Presentational (most components)
 - Nearly all markup
 - Receive function, data, and actions via props
 - Know nothing about redux
@@ -169,21 +169,21 @@
 
 ### Redux vs Context vs Lift State
 
-#### Lift State to common parent (App.jsx)
+### Lift State to common parent (App.jsx)
 - Lift state, user data lifted to common ancestor and passed to children
     - "prop drilling"
     - good first step for small apps
     - becomes tedious
         - leads to components with many props that exist merely to pass data down
 
-#### Context
+### Context
 - Expose global data and functions from given react component...but not truly global data
     - UserContext.Provider 
         - holds user data and functions, often in App.jsx (common ancestor)
     - UserContext.Consumer
         - Import UserContext and access data via UserContext.Consumer
 
-#### Redux
+### Redux
 - Centralized Store
     - Conceptualize store as local CS database where App's global data stored (index.jsx)
     - Any component can connect to Redux store
@@ -241,7 +241,7 @@
 
 ### Differences
 
-#### Redux
+### Redux
 - Reducers
     - Pure functions that take current state in an action and return a new state
 - Containers
@@ -253,7 +253,7 @@
     - Redux store immutable
 
 
-#### Flux has three core concepts
+### Flux has three core concepts
 - Actions
 - Dispatchers
 - Stores
@@ -262,14 +262,14 @@
     - Stores use event emitter to connect to dispatcher 
     - each store needs to connect to dispatcher via eventEmitter
 
-#### Redux
+### Redux
 - No dispatcher
     - Relies on pure functions (reducers) instead
     - each action handled by one or more reducers which update the single store 
 - State is immutable
     - Reducer returns a new, updated copy of state which updates store
 
-#### Flux vs Redux cont
+### Flux vs Redux cont
 - Flux
     - Stores contain state and change logic
     - Supports having multiple stores (user store and product store for example)
@@ -340,7 +340,7 @@
         - useful to support hot-reloading (replaceReducer)
 - Store is immutable
 
-#### Immutability
+### Immutability
 - What JS types are already immutable?
     - Number, string, boolean, undefined, null
         - Each time value changed a new copy is created
@@ -349,7 +349,7 @@
 - Redux depends on immutable state to enhance performance
     - Returns not object -> not mutating state 
 
-##### Copy via Object.assign
+### Copy via Object.assign
 - Signature
     - Object.assign(target, ...sources)
 - Example
@@ -362,7 +362,7 @@
 - only creates shallow copies
     - nested objects must be cloned too
 
-##### Copy via Spread operator
+### Copy via Spread operator
 - const newState = { ...state, role: 'admin' }
     - creates new object that is copy of state but with role prop of admin
 - const newUsers = [ ...state.users ]
@@ -375,14 +375,14 @@
             - const userCopy = { ...user, address: { ...user.address } }
         - Only clone nested object if object val needs to be modified however
 
-##### Only clone what changes
+### Only clone what changes
 - Deep merging tools such as clone-deep or lodash.merge
     - Avoid blindly deep cloning
     - Why?
         - Deep cloning is expensive, wasteful, and causes unnecessary renders
 - Instead, clone only the objects and sub-objects and sub-sub-objects that have changed
 
-##### Immer
+#### Immer
 - write mutative code and immer will handle change in an immutable manner
 - https://www.npmjs.com/package/immer
 - Additional libraries to handle state changes immutably
@@ -400,7 +400,7 @@
         - Immutable friendly
         - return new array (don't mutate existing array)
 
-#### Why is state immutable in Redux? Three core benefits
+### Why is state immutable in Redux? Three core benefits
 - Clarity
     - When state updated, where and how it happened is straightforward
         - It occurred in Reducer
@@ -420,7 +420,7 @@
     - Play interactions back with click of a button
         - Can toggle the speed at which it plays back 
 
-#### Enforcing Immutability
+### Enforcing Immutability
 - If state mutated in redux, will introduce a bug 
 - Solution
     - Trust the team if small
@@ -446,18 +446,18 @@
 - All reducers called on each dispatch
     - Switch statement in reducer determines whether reducer has anthing to do with new state
 
-#### Forbidden in Reducers
+### Forbidden in Reducers
 - Mutate arguments
 - Perform side effects
 - Call non-pure functions 
     - date.now() or math.random() -> non-pure
 
-#### Reducer handles its "Slice" of state
+### Reducer handles its "Slice" of state
 - only passed its slice of state
     - can only access portion of state it directly manages
     - handle changes to different pieces of store in isolation
 
-#### Reducer Composition
+### Reducer Composition
 - Each action can be handled by multiple reducers
 - Each reducer can handle multiple actions
     - "Write independent small reducer functions that are each responsible for updates to a specific slice of state. We call this pattern "reducer composition". A given action could be handled by all, some, or none of them." - Redux FAQ
@@ -489,7 +489,7 @@
     - (1) Provider Component
     - (2) Connect Component
 
-#### React-Redux Provider
+### React-Redux Provider
 - utilized at apps root
 - attaches app to redux store
 - only need to use once in root
@@ -504,7 +504,7 @@
     - both params functions
     - both params optional
 
-##### mapStateToProps
+#### mapStateToProps
 - Useful for defining what part of Redux store to expose as props
 - when defined, component subscribes to component store updates
     - on each update, mapStateToProps called 
@@ -521,7 +521,7 @@
             - if just called, it simply returns memoized value 
             - useful for increasing performance
 
-##### mapDispatchToProps
+#### mapDispatchToProps
 - Specifies what actions to expose as props
     - Determines desired actions to expose
 - Receives dispatch as its loan parameter 
@@ -811,3 +811,19 @@
         - Leads to tests that are less brittle
         - encourages writing accessible applications 
 - Also uses JSDOM (no actual browser required)
+
+### Snapshot Testing with Jest
+- Snapshots store a record of a component's output
+    - Snapshots can be useful for documenting
+        - expected output
+        - regression testing protection
+- written in same directory as test with underscores on front and back
+    - ensures that it doesn't conflict with other folder names
+    - stores output of component 
+        - entirety of component from rendering with selected props 
+- use snapshot-tools extension
+    - can hover over .toMatchSnapshot() to see expected output
+
+### Configuring Enzyme
+- testSetup.js
+    - requires pulling in an adapter for version of React being used
