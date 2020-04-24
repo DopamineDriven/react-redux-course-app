@@ -905,3 +905,11 @@
         - redux-mock-store
     - (2) HTTP calls and any API calls made
         - fetch-mock
+
+### Testing Reducers
+- Naturally lend themselves to unit testing -> Why?
+    - Reducers are pure functions
+        - "...people who never wrote unit tests for front-end apps started writing them because it is just so easy to test reducers." - Dan Abramov 
+    - no need to mock any dependencies or simulate API calls -> Why?
+        - any new incoming data comes in as an action 
+- Simply call reducer with a state and an action and assert that its output is what's expected 
