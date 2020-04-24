@@ -13,7 +13,10 @@ export default function apiCallStatusReducer(
 ) {
     if (action.type == types.BEGIN_API_CALL) {
         return state + 1
-    } else if (actionTypeEndsInSuccess(action.type)) {
+    } else if (
+        action.type === types.API_CALL_ERROR ||
+        actionTypeEndsInSuccess(action.type)
+    ) {
         return state - 1
     }
     return state
@@ -34,4 +37,5 @@ using an if statement instead of a switch since simple reducer
     Redux doesn't force the use of a switch statement
 If the action type ends in success, decrement number of API calls in progress
     via the use of helper function 
+Also if the API call is errored, decrement number of API calls by one 
 */
