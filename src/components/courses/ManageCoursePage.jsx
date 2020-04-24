@@ -47,8 +47,21 @@ function ManageCoursePage({
     }));
   }
   // (d)
+  function formIsValid() {
+    const { title, authorId, category } = course;
+    const errors = {};
+    if (!title) errors.title = "Title is required.";
+    if (!authorId) errors.authorId = "Author is required.";
+    if (!category) errors.category = "Category is required.";
+
+    setErrors(errors)
+    return Object.keys(errors).length === 0; 
+  }
+
+  // (e)
   function handleSave(event) {
     event.preventDefault();
+    if (!formIsValid()) return;
     setSaving(true);
     saveCourse(course)
       .then(() => {
@@ -60,7 +73,7 @@ function ManageCoursePage({
         setErrors({ onSave: error.message });
       });
   }
-  // (e)
+  // (f)
   return authors.length === 0 || courses.length === 0 ? (
     <Spinner />
   ) : (
@@ -85,12 +98,12 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-// (f)
+// (g)
 export function getCourseBySlug(courses, slug) {
   return courses.find((course) => course.slug === slug) || null;
 }
 
-// (g)
+// (h)
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
   const course =
@@ -104,7 +117,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-// (h)
+// (i)
 const mapDispatchToProps = {
   loadCourses,
   loadAuthors,
@@ -156,6 +169,21 @@ Destructuring at the top -> can access event inside of the setState function and
 
 /*
 (d)
+CS form validation
+  destructure to shorten calls below
+  declare empty errors object
+    then set property on errors object (e.g., errors.title, errors.author)
+    this corresponds to the fields property in state
+    call setErrors (defined via useState) with errors object
+  return a boolean to determine if form is valid or !valid
+    form is valid if errors object is empty (has no properties)
+    this is achieved via the use of Object.keys
+      it returns an array of an object's properties 
+      if no properties on object -> no errors found 
+*/
+
+/*
+(e)
 handleSave accepts an event
     preventDefault called to keep page from refreshing
     then call saveCourse and pass it course available in state
@@ -167,14 +195,14 @@ saveCourse is getting passed in on props
 */
 
 /*
-(e)
+(f)
 Created a ternary expression
   if authors.length = 0 and courses.length = 0 then show spinner
   else, load the page
 */
 
 /*
-(f)
+(g)
 getCourseBySlug func
     accepts list of courses and course slug being looked for 
     utilize JS's built-in find method to get requested course
@@ -188,7 +216,7 @@ These functions are commonly called "Selectors"
 */
 
 /*
-(g)
+(h)
 ownProps parameter -> automatically passed in by Redux
     enables access to component props
     in this case, routing-related props
@@ -200,7 +228,7 @@ to read course slug from url, a single line of code is required
 */
 
 /*
-(h)
+(i)
 declare mapDispatchToProps as an object instead of a function
 call loadCourses and loadAuthors as named import
     The bound action passed on props takes precedence over the module scope
