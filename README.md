@@ -711,3 +711,103 @@
 - Optimistic tradeoff
     - Better user experience when call succeeds
     - Confusing user experience if call fails 
+
+
+-------------------------------------------------------------------------------------------
+
+
+## Testing React
+- Testing Technologies
+    - Testing frameworks
+    - Helper libraries
+- Test React Components
+    - Jest (testing framework)
+        - Enzyme
+        - React Testing Library
+
+### Testing Frameworks 
+- Jest
+    - Developed by Facebook
+        - https://jestjs.io/
+    - Most Popular testing framework for React
+    - Jest comes bundled with create-react-app
+- Mocha
+    - more configurable than Jasmine
+- Jasmine
+- Test
+    - Simplicity and minimal config
+    - Avoids global variable configuration that exists in the previous three
+- AVA
+
+### Jest
+- easy to configure, popular, fast, offers excellent CLI
+    - not to mention React is developed by Facebook so...Jest should be sympatico
+- Unique features
+    - Snapshot testing
+        - Generate and store serialized snapshots to help protect from regressions
+
+### Helper Libraries
+- React Test Utils
+- Enzyme
+- React Testing Library 
+
+### React Test Utils (RTUs)
+- Specifically for testing React components
+- Built by Facebook
+- Verbose API 
+- Two rendering options
+    - (1) shallowRender
+        - render single component, none of its children
+            - useful to test component as unit
+            - ensure that tests aren't asserting on behavior of child components
+        - No DOM required
+            - returns object mirroring what can be expected in a real DOM
+        - Fast and Simple
+    - (2) renderIntoDocument
+        - Render component and children
+        - DOM required 
+            - do not have to fire up browser to use
+            - can utilize libs such as jsdom (simulated dom, runs in node)
+            - allows for interaction with DOM as though in real browser
+        - Supports simulating interactions
+            - simulate multiple interactions 
+
+### RTUs: DOM Interactions
+- findRenderedDOMComponentWithTag
+    - find specific DOM element
+- scryRenderedDOMComponentsWithTag
+    - finds components by tag name
+- Simulate
+    - clicks
+    - keypresses
+    - and more
+        - https://reactjs.org/docs/test-utils.html
+
+
+### Enzyme vs RTUs
+- Enzyme uses RTUs behind the scenes -> creates friendlier API on top of it
+- Enzyme's find function is very versatile
+    - Accepts CSS selectors (can use CSS or jQuery)
+
+| **Enzyme** | **RTUs**                            |
+| -----------| ------------------------------------|
+| find       | findRenderedDOMComponentWithTag     |
+| find       | scryRenderedDOMComponentsWithTag    |
+| find       | scryRenderedDOMComponentsWithClass  |
+
+### Enzyme is an Abstraction
+- Behind the scenes
+    - Uses RTUs
+    - uses JSDOM to create an in-memory DOM 
+        - simulates the browser
+    - Cheerio library
+        - fast jQuery style selectors
+
+### React Testing Library 
+- Alternative to Enzyme
+- Offers smaller API 
+    - helps encourage writing tests resembling how software is used
+    - Why?
+        - Leads to tests that are less brittle
+        - encourages writing accessible applications 
+- Also uses JSDOM (no actual browser required)
