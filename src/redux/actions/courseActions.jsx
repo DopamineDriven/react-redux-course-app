@@ -11,10 +11,13 @@ export function updateCourseSuccess(course) {
 }
 
 // (a)
-export function loadCourseSuccess(courses) {
-    return { type: types.LOAD_COURSES_SUCCESS, courses }
+export function loadCourseSuccess(course) {
+    return { type: types.LOAD_COURSES_SUCCESS, course }
 }
 
+export function deleteCourseOptimistic(course) {
+    return { type: types.DELETE_COURSE_OPTIMISTIC, course }
+}
 
 // (b)
 export function loadCourses() {
@@ -48,7 +51,13 @@ export function saveCourse(course) {
         })
     }
 }
-
+// (d)
+export function deleteCourse(course) {
+    return function(dispatch) {
+        dispatch(deleteCourseOptimistic(course))
+        return courseApi.deleteCourse(course.id)
+    }
+}
 
 
 
@@ -100,4 +109,13 @@ export function saveCourse(course) {
     update:
         dispatch(beginApiCall()) before returning courseApi
             ensure to invoke with parentheses 
+*/
+
+/*
+(d)
+    new thunk -> deleteCourse
+    optimistic delete -> 
+        no dispatching begin/end api call, actions or apiCallError
+        since loading status is not shown to the user for this.
+        Rather, immediately dispatching deletion so UI is instantly updated.
 */

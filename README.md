@@ -703,3 +703,11 @@
 - Adding client-side validation
 - Implementing Optimistic deletes (helps mask a slow API)
 - Try Async/Await instead of products
+
+### Optimistic Deletes
+- Rather than waiting for API call to complete, delete can be executed immediately
+    - That is, the UI can be updated instantly 
+- Popular technique for making UIs feel extremely responsive
+- Optimistic tradeoff
+    - Better user experience when call succeeds
+    - Confusing user experience if call fails 

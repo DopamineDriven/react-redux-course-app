@@ -18,6 +18,9 @@ export default function courseReducer(
             );
         case types.LOAD_COURSES_SUCCESS:
             return action.courses;
+        // (b)
+        case types.DELETE_COURSE_OPTIMISTIC:
+            return state.filter(course => course.id !== action.course.id)
         default: 
             return state;
     }
@@ -35,4 +38,16 @@ export default function courseReducer(
             all without changing the order of the array!
     utilizing the "concise arrow syntax"
         return is implied -> a single expression without curly braces
+*/
+
+/*
+(b)
+    return array of courses but omit deleted course
+        this is achieved via JS's filter function
+            filter accepts a predicate ->
+                predicate is a function that accepts
+                an item and returns a boolean result
+            ensure that course.id is not action.course.id
+        the filter function returns a new array without mutating state
+            returns an array with one coursed omitted from the list
 */

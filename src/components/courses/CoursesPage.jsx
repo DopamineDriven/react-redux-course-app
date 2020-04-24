@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 import CourseList from "./CourseList.jsx";
 import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner.jsx";
+import { toast } from 'react-toastify';
 
 class CoursesPage extends Component {
   state = {
@@ -27,8 +28,18 @@ class CoursesPage extends Component {
     }
   }
 
+  // (a)
+  handleDeleteCourse = async course => {
+      toast.success("Course deleted");
+      try {
+        await this.props.actions.deleteCourse(course)
+      } catch (error) {
+          toast.error("Delete failed. " + error.message, { autoClose: false })
+      }
+  }
+
   render() {
-      // (a)
+      // (b)
     return (
       <>
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
@@ -46,7 +57,10 @@ class CoursesPage extends Component {
               Add Course
             </button>
 
-            <CourseList courses={this.props.courses} />
+            <CourseList
+                onDeleteClick={this.handleDeleteCourse} 
+                courses={this.props.courses} 
+            />
           </>
         )}
       </>
@@ -61,7 +75,7 @@ CoursesPage.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-// (b)
+// (c)
 function mapStateToProps(state) {
   return {
     courses:
@@ -84,6 +98,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+      deletedCourse: bindActionCreators(courseActions.deleteCourse, dispatch)
     },
   };
 }
@@ -92,9 +107,13 @@ const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
 export default connectedStateAndProps(CoursesPage);
 
 
-
 /*
 (a)
+handleDeleteCourse
+*/
+
+/*
+(b)
 ternary conditional
     if loading is true, render spinner
     else, render everything else 
@@ -105,10 +124,8 @@ note:
         button and CourseList were conflicting in the else statement of conditional 
 */
 
-
-
 /*
-(b)
+(c)
 use conditional to check if state.authors.length is loaded via ternary
 if it is loaded, weave authorName into course array being mapped
 to retrieve author name, look in list of redux stores for author
