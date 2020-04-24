@@ -845,4 +845,26 @@
                     - expects to receive React Router's props
 
 ### React Testing Library
-- 
+- { cleanup, render }
+    - Have to use 
+        - afterEach(cleanup);
+    - at top of file
+        - this runs after each test
+    - render function returns a number of methods
+        - ByTestId, ByRole, ByTitle, etc (see DOM testing Library) 
+        - { getByText } being one of them
+        - this is destructured in each test
+        - this function implies an assertion
+            - no manual assertion (expect) required
+- unlike enzyme, there is no shallow rendering
+    - components are always mounted
+    - by querying, assertion is automatic
+- Has philosophy that one should focus on what the end user sees
+    - Component tested and its children are rendered
+- Debug can also be destructured with method utilized in test
+    - outputs nice colorized CLI result
+
+### React Testing Library -> @Testing-Library/React
+- React Testing Library has moved to @Testing-Library/React
+    - use the latter library with the same exact parameters
+    - former library is no longer supported
