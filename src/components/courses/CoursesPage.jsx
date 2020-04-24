@@ -110,6 +110,11 @@ export default connectedStateAndProps(CoursesPage);
 /*
 (a)
 handleDeleteCourse
+    optimistic delete
+        if API call fails the user will be notified with toast
+        that remains on screen until manually closed
+    await pauses execution and resumes when async call completes 
+    async/await -> syntactic sugar over promises
 */
 
 /*
