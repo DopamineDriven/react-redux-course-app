@@ -11,7 +11,8 @@ import Wrapper from './wrapper/Wrapper.jsx';
 import Footer from './footer/Footer.jsx';
 import Navbar from './navbar/Navbar.jsx';
 import ManageCoursePage from './courses/ManageCoursePage.jsx';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                     <Route path="/course" component={ManageCoursePage} />
                     <Route component={PageNotFound} />
                 </Switch>
+                <ToastContainer autoClose={3000} hideProgressBar />
             </Container>
         </Wrapper>
         <Footer />
