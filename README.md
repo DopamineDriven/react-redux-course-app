@@ -44,6 +44,7 @@
 | **Dependency**                  | **Use**                                                          |
 | ------------------------------- | ---------------------------------------------------------------- |
 | @babel/core                     | Transpiles modern JavaScript so it runs cross-browser            |
+| @testing-library/react          | Test React components                                            |
 | babel-eslint                    | Lint modern JavaScript via ESLint                                |
 | babel-loader                    | Add Babel support to Webpack                                     |
 | babel-preset-react-app          | Babel preset for working in React. Used by create-react-app too. |
@@ -65,7 +66,6 @@
 | npm-run-all                     | Display results of multiple commands on single command line      |
 | postcss-loader                  | Post-process CSS via Webpack                                     |
 | react-test-renderer             | Render React components for testing                              |
-| react-testing-library           | Test React components                                            |
 | redux-immutable-state-invariant | Warn when Redux state is mutated                                 |
 | redux-mock-store                | Mock Redux store for testing                                     |
 | rimraf                          | Delete files and folders                                         |
@@ -921,3 +921,7 @@
 - Goal
     - ensure actions, store, and reducers all working together as expected
 - tests a large surface area with a small amount of code without being brittle in the process
+
+-------------------------------------------------------------------------------------------
+
+## Production Builds
