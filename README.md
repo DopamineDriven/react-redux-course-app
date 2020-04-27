@@ -946,5 +946,15 @@
     - Indicates app size and which packages are in app build
 - Run the build on a local webserver
 
+### Preparing Redux store for production
+- contains certain aspects not necessary for production
+    - redux immutable state invariant 
+    - reduxDevTools configuration 
+- Solution
+    - create separate redux store for production
+    - create confureStore.js file to using CommonJS module.exports syntax
+        - dynamically import prod or dev via if else conditional
 
+### Preparing webpack for production
+- create prod webpack config 
 
