@@ -29,9 +29,22 @@ module.exports = {
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
             "process.env.API_URL": JSON.stringify("http://localhost:3001")
         }),
+        // (f)
         new HtmlWebpackPlugin({
             template: "src/index.html",
-            favicon: "src/favicon.ico"
+            favicon: "src/favicon.ico",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true
+            }
         })
     ],
     module: {
@@ -43,7 +56,23 @@ module.exports = {
             },
             {   
                 test: /(\.css)$/,
-                use: ["style-loader", "css-loader"]
+                // (g)
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: () => [require("cssnano")],
+                            sourceMap: true
+                        }
+                    }
+                ]
             }
         ]
     }
@@ -70,7 +99,7 @@ use source-map instead of cheap-module-source-map
 
 /*
 (d)
-eliminate devServer
+eliminate devServer above
 add webpackBundleAnalyzer
     configurated to automatically display report of bundle contents upon completion 
 add MiniCssExtractPlugin
@@ -89,12 +118,17 @@ modify defined plugins (new webpack.DefinePlugin)
 production mode
     eliminates dev-specific features for performance to deliver smaller bundle size
         property types for example 
+*/
+
+/*
+(f)
 HtmlWebpackPlugin
     performs a number of functions
         generates index.html
         adds references to JS/CSS bundles into the html
             useful since JS and CSS filenames change over time since they contain hashes
                 can cache them for a long time on web server
+    https://github.com/kangax/html-minifier#options-quick-reference
     additional prod settings 
         minifies html, removes comments, collapses white spaces, removes redundant attributes,
         uses short doc types, removes style link type attributes, retains closhing slash,
@@ -102,5 +136,16 @@ HtmlWebpackPlugin
 */
 
 /*
-(f)
+(g)
+MiniCssExtractPlugin.loader
+    css-loader
+        extracts CSS to separate file
+        generates a source map for debugging purposes
+    postcss-loader
+        performs variety of processing on CSS
+        cssnano post-css plugin minifies CSS
+IMPORTANT
+    loaders run from the bottom up
+        post-css nano loader runs first
+        then css-loader takes over, generates source map, extracts to separate file 
 */
