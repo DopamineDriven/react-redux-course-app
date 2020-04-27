@@ -960,9 +960,29 @@
 - note
     - loaders run from the bottom up
 
-### npm scripts in production
+### npm scripts for production environment (ordered)
+- add test:ci script
+    - runs test just once (not in watch mode)
+        - ci -> continuous integration
+        - likely a script one would run on a CI server
+    - used to ensure that app not deployed if tests fail
+- add clean:build script
+    - deletes previous build by calling the rimraf package
+    - rimraf is a cross-platform friendly way to delete files
+    - then recreate build folder using mkdir build command
+- add prebuild script
+    - uses run-p to run multiple npm scripts in parallel
+        - run-p command comes with npm run all package
+    - runs clean:build and test:ci scripts in parallel 
+        - if tests fail, the build fails 
 - add build script
     - runs webpack and passes config of webpack.config.prod.js
 - add postbuild script
-- add serve:build script
+    - runs server after build complete
+    - serves build and starts api via run-p command
+    - note
+        - for a real production build app, hit a different api
+- add serve:build script 
+    - utilizes lightweight web server -> http-server
+        - serves what is written to build folder 
 
