@@ -1,11 +1,10 @@
 const webpack = require('webpack');
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-const isDev = process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "development";
 
 module.exports = {
-    mode: isDev,
+    mode: "development",
     // could set target to node if app running in node instead of react
     target: "web",
     // recommended for dev -> source map for debugging
