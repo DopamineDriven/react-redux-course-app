@@ -925,3 +925,26 @@
 -------------------------------------------------------------------------------------------
 
 ## Production Builds
+- Current dev build is ~1.8MB
+- Goal
+    - Under 100K
+    - Minify and bundle
+        - index.html references both of the following
+            - styles.css
+            - bundle.js
+
+### Production Build Process
+- Lint and run tests
+- Bundle and minify JS and CSS
+- Generate JS and CSS sourcemaps
+    - to debug production issues
+- Exclude dev-specific concerns
+    - Dev only redux store configs for example
+- Build React in production mode
+    - dev-specific features such as prop-type validation eliminated for optimal performance
+- Generate bundle report
+    - Indicates app size and which packages are in app build
+- Run the build on a local webserver
+
+
+
