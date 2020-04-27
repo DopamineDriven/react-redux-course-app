@@ -957,4 +957,12 @@
 
 ### Preparing webpack for production
 - create prod webpack config 
+- note
+    - loaders run from the bottom up
+
+### npm scripts in production
+- add build script
+    - runs webpack and passes config of webpack.config.prod.js
+- add postbuild script
+- add serve:build script
 
