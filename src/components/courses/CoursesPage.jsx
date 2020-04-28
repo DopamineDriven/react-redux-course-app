@@ -36,7 +36,7 @@ class CoursesPage extends Component {
       } catch (error) {
           toast.error("Delete failed. " + error.message, { autoClose: false })
       }
-  }
+  };
 
   render() {
       // (b)
@@ -98,7 +98,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
-      deletedCourse: bindActionCreators(courseActions.deleteCourse, dispatch)
+      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch)
     },
   };
 }
