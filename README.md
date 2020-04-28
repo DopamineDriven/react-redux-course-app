@@ -927,7 +927,7 @@
 ## Production Builds
 - Current dev build is ~1.8MB
 - Goal
-    - Under 100K
+    - Under 100KB
     - Minify and bundle
         - index.html references both of the following
             - styles.css
@@ -985,4 +985,58 @@
 - add serve:build script 
     - utilizes lightweight web server -> http-server
         - serves what is written to build folder 
+
+### Running production build
+- all tests run in parallel with clean build
+- tests pass ? finish build : disallow build
+- Source map generated at 127.0.0.1.8888
+    - size of boxes represent size of files
+    - hover mouse over bundle.js for g-zipped value 
+        - production build size: 66.39 KB
+- interesting note
+    - redux only 2.26 KB g-zipped
+- ~1800 KB (dev) -> 66.39 KB (prod)
+    - dev is 27.1125x the size of prod
+- Bundle size improvements
+    - Code Splitting
+        - React.lazy
+            - lazy load components by splitting bundle
+- After build succeeds, open another terminal
+    - npm run postbuild
+        - http server will serve the ./build directory
+            - http://192.168.86.168:8080
+            - http://127.0.0.1:8080
+            - http://172.17.207.49:8080
+
+### If deployed to production (PaaS)
+- Confgure webserver to direct all requests to index.html
+    - Why?
+        - React Router can handle all requests in this way
+        - Client-side routing takes over and loads proper page
+        - Else, routes will fail when user loads deep link such as /courses
+            - Why?
+                - web server will look for a folder called /courses that does not exist 
+    - in express a single route can be configured that directs all requests to index.html
+
+### Final Challenges
+- Add support for administering authors
+    - add logic to ensure you cannot delete an author that has a course
+- Filter course list 
+    - add filters for list at top of table 
+- Hide empty course list table
+- Unsaved changes message 
+    - message to user if navigating from managed course form and there are unsaved changes
+- Enhance client and server side validation to be more strict about data entered
+- Handle 404 on edit course if slug entered is incorrect
+    - Hint: add logic to mapStateToProps
+- Show the number of courses in the header 
+    - example of how redux's single store model pays off
+    - adding is trivial; no worry of it getting out of sync
+- Add pagination to course table in order to support large datasets
+- Sort course table alphabetically by title
+    - That way the last course updated or created isn't appended to bottom of table
+    - Or, add drop downs above table to allow user to sort by different columns
+    - Hint: mapStateToProps is a good way to achieve this 
+- Revert abandoned changes
+    - keep old course data so users can view history and click undo to revert changes, even after hitting save 
 
